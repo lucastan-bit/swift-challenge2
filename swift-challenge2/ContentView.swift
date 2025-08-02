@@ -20,6 +20,7 @@ struct ContentView: View {
                     .shadow(radius: 10)
             } else {
                 ProgressView("Hang tight - we're currently locating you!")
+                    .padding()
             }
         }
     }
