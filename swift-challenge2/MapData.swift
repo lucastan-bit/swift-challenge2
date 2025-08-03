@@ -11,7 +11,7 @@ import CoreLocation
 class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     private var locationManager = CLLocationManager()
     
-    @Published var location: CLLocation?
+    @Published var location: CLLocation? = CLLocation(latitude: 1.3062, longitude: 103.8796)
     
     override init() {
         super.init()
@@ -22,6 +22,8 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        location = locations.first
+        if let loc = locations.first {
+            location = loc
+        }
     }
 }

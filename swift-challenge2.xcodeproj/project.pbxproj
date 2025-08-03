@@ -29,9 +29,22 @@
 		918526A62E3DFEBC0029F43D /* swift-challenge2UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "swift-challenge2UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		D9D7BAB62E3EFCC800CEEA5B /* Exceptions for "swift-challenge2" folder in "swift-challenge2" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Untitled.swift,
+			);
+			target = 9185268A2E3DFEBB0029F43D /* swift-challenge2 */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		9185268D2E3DFEBB0029F43D /* swift-challenge2 */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				D9D7BAB62E3EFCC800CEEA5B /* Exceptions for "swift-challenge2" folder in "swift-challenge2" target */,
+			);
 			path = "swift-challenge2";
 			sourceTree = "<group>";
 		};
