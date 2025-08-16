@@ -15,7 +15,7 @@ struct RouteInputView: View {
         )
     @State var text = ""
     @State private var searchResults: [MKMapItem] = []
-    
+    @State var userDestination = ""
     
     
     var body: some View {
@@ -26,12 +26,19 @@ struct RouteInputView: View {
                 .textFieldStyle(.roundedBorder)
                 .padding()
                 .overlay(alignment: .bottom) {
-                    
                 }
-            
-
             Button("View Search Results") {
                 search(for: text)
+            }
+            List {
+                ForEach(searchResults, id: \.self) { result in
+                    if let name = result.name {
+                        NavigationLink("\(name)") {
+                            // userDestination = "\(name)"
+                            RouteInputTwoView(destinationName: "\(name)")
+                        }
+                    }
+                }
             }
         }
     }
