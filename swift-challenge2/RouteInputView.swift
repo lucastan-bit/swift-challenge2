@@ -17,12 +17,20 @@ struct RouteInputView: View {
     @State private var searchResults: [MKMapItem] = []
     
     
+    
     var body: some View {
         NavigationStack {
             Text("Let's plan your route!")
                 .font(.largeTitle)
-            TextField("Enter Text", text: $text)
-            Button("ioahsdoihasod") {
+            TextField("Type in your destination!", text: $text)
+                .textFieldStyle(.roundedBorder)
+                .padding()
+                .overlay(alignment: .bottom) {
+                    
+                }
+            
+
+            Button("View Search Results") {
                 search(for: text)
             }
         }
