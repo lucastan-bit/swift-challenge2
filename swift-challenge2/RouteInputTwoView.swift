@@ -43,7 +43,7 @@ struct RouteInputTwoView: View {
                 }
                 Section {
                     HStack {
-                        Picker("Select mode of transport", selection: $selectedModeOfTransport) {
+                        Picker("Mode of transport", selection: $selectedModeOfTransport) {
                             ForEach(transportModes, id: \.self) {
                                 Text($0)
                             }
