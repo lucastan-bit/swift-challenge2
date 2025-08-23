@@ -85,7 +85,10 @@ struct RouteInputView: View {
                 Button("Search Destination") {
                     search(for: searchText)
                 }
-                .buttonStyle(.borderedProminent)
+                .padding(10)
+                .foregroundStyle(.white)
+                .background(Color.gray)
+                .cornerRadius(10)
                 .disabled(searchText.isEmpty)
                 
                 // OK SO ONE CE U CLCI K ON THE LOCATIION U SEARCHED UP, THEN IT SHOWS THIS LLOL
@@ -101,6 +104,7 @@ struct RouteInputView: View {
                                 NavigationLink(destination: RouteInputTwoView(destinationName: name)) {
                                     VStack(alignment: .leading) {
                                         Text(name)
+                                            .bold()
                                             .font(.headline)
                                         if let address = result.placemark.title {
                                             Text(address)

@@ -20,23 +20,50 @@ struct RouteInputTwoView: View {
     var body: some View {
         NavigationStack {
             Form {
-                Text("You picked \(destinationName) as your destination.")
+                
+                //oo fancy bold
+                Text("You picked ") + Text(destinationName).bold() + Text(" as your destination.")
+                
+                
                     .font(.subheadline)
-                    .frame(maxWidth: .infinity)
+                    
                 Section {
                     HStack {
+                        
+                        VStack {
+                            
+                        Text("Hours")
+                                .font(.system(size: 25))
+                                .bold()
+                            
+                            
                         Picker("Hours", selection: $selectedHour) {
                             ForEach(hours, id: \.self) {
                                 Text(String(format: "%02d", $0))
                             }
-                        }
-                        .pickerStyle(.wheel)
-                        Picker("Minutes", selection: $selectedMinute) {
-                            ForEach(minutes, id: \.self) {
-                                Text(String(format: "%02d", $0))
                             }
-                        }
+                            
                         .pickerStyle(.wheel)
+                        }
+                        
+                        VStack {
+                            Text("Minutes")
+                                .font(.system(size: 25))
+                                .bold()
+                            
+                                
+                            Picker("Minutes", selection: $selectedMinute) {
+                                ForEach(minutes, id: \.self) {
+                                    Text(String(format: "%02d", $0))
+                                    
+                                   
+                                    
+                                }
+                            }
+                            
+                            .pickerStyle(.wheel)
+                            
+                        }
                     }
                 } header : {
                     Text("Time you want to arrive")
