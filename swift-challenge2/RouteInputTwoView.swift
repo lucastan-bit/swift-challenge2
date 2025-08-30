@@ -5,11 +5,12 @@
 //  Created by T Krobot on 16/8/25.
 //
 
+import MapKit
 import SwiftUI
 
 struct RouteInputTwoView: View {
     
-    @State var destinationName: String
+    @State var destination: MKMapItem
     @State private var selectedHour = 00
     let hours = [00, 01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
     @State private var selectedMinute = 00
@@ -24,7 +25,7 @@ struct RouteInputTwoView: View {
             Form {
                 
                 //oo fancy bold
-                Text("You picked ") + Text(destinationName).bold() + Text(" as your destination.")
+                Text("You picked ") + Text(destination.name ?? "").bold() + Text(" as your destination.")
                 
                 
                     .font(.subheadline)
@@ -90,7 +91,7 @@ struct RouteInputTwoView: View {
                 }
                 
                 .sheet(isPresented: $isShowingSheet){
-                    RoutePage()
+                    RoutePage(destination: destination)
                 }
                 
                 
@@ -103,6 +104,6 @@ struct RouteInputTwoView: View {
 
 
 #Preview {
-    RouteInputTwoView(destinationName: "")
+    RouteInputTwoView(destination: MKMapItem())
 }
 

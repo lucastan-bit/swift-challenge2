@@ -9,6 +9,7 @@ import SwiftUI
 import MapKit
 
 struct RouteInputView: View {
+    
     let singapore = CLLocationCoordinate2D(
         latitude: 1.3521,
         longitude: 103.8198
@@ -16,7 +17,7 @@ struct RouteInputView: View {
     
     @State private var searchText = ""
     
-    //SEARCH RESULTS VARIABLE, SHOWS U THE AMOUNT OF ITEMS IT CAN FIND AND SHOW POSSIBLY [below me] fjeerfjg
+    // SEARCH RESULTS VARIABLE, SHOWS U THE AMOUNT OF ITEMS IT CAN FIND AND SHOW POSSIBLY [below me] fjeerfjg
     
     @State private var searchResults: [MKMapItem] = []
     @State private var searchSuggestions: [MKLocalSearchCompletion] = []
@@ -59,27 +60,7 @@ struct RouteInputView: View {
                         }
                     
                     // THEN ITS GONNA SEARCH FOR LISTS SIMILAR TO IT YEAH THANKS TO HACKING WITH SWIFT FOR THIS
-                    if isSearching && !searchSuggestions.isEmpty {
-                        List(searchSuggestions, id: \.self) { suggestion in
-                            Button {
-                                searchText = suggestion.title
-                                searchSuggestions.removeAll()
-                                isSearching = false
-                                search(for: suggestion.title)
-                            } label: {
-                                VStack(alignment: .leading) {
-                                    Text(suggestion.title)
-                                        .font(.headline)
-                                    Text(suggestion.subtitle)
-                                        .font(.subheadline)
-                                        .foregroundColor(.gray)
-                                }
-                            }
-                        }
-                        .listStyle(PlainListStyle())
-                        .frame(height: 200)
-                        .padding(.horizontal)
-                    }
+                    
                 }
                 
                 Button("Search Destination") {
@@ -100,17 +81,15 @@ struct RouteInputView: View {
                     
                     Section() {
                         ForEach(searchResults, id: \.self) { result in
-                            if let name = result.name {
-                                NavigationLink(destination: RouteInputTwoView(destinationName: name)) {
-                                    VStack(alignment: .leading) {
-                                        Text(name)
-                                            .bold()
-                                            .font(.headline)
-                                        if let address = result.placemark.title {
-                                            Text(address)
-                                                .font(.subheadline)
-                                                .foregroundColor(.gray)
-                                        }
+                            NavigationLink(destination: RouteInputTwoView(destination: result)) {
+                                VStack(alignment: .leading) {
+                                    Text(result.name ?? "")
+                                        .bold()
+                                        .font(.headline)
+                                    if let address = result.placemark.title {
+                                        Text(address)
+                                            .font(.subheadline)
+                                            .foregroundColor(.gray)
                                     }
                                 }
                             }
@@ -180,9 +159,11 @@ struct RouteInputView: View {
         }
         
         
-        }
     }
+}
 
+
+// i'm going to pass the fuck on
 
 #Preview {
     RouteInputView()

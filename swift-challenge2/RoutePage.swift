@@ -11,36 +11,44 @@ import MapKit
 
 
 struct RoutePage: View {
-    @State private var region = MKCoordinateRegion(
-        center: CLLocationCoordinate2D(latitude: 37.7749, longitude: -122.4194),
-        span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
-    )
-    
-   
+    @State var destination: MKMapItem
+    @State private var route: MKRoute?
+    @EnvironmentObject var locationManager: LocationManager
     
     var body: some View {
-        VStack() {
-            Map(coordinateRegion: $region)
-                .edgesIgnoringSafeArea(.all)
+        Map {
+            // Adding the marker for the starting point
+            Marker("Start", coordinate: self.locationManager.location)
             
-            
-            Text("test text")
-                .padding()
-                .font(.system(size: 60))
-            
-            
-        
-            
-            
-                
-                
-                
-               
-                    
-            
+            // Show the route if it is available
+            if let route {
+                MapPolyline(route)
+                    .stroke(.blue, lineWidth: 5)
+            }
+        }
+        .onAppear {
+            getDirections()
         }
     }
+    
+    func getDirections() {
+        self.route = nil
+        
+        // Create and configure the request
+        let request = MKDirections.Request()
+        request.source = MKMapItem(placemark: MKPlacemark(coordinate: self.locationManager.location))
+        request.destination = self.destination
+        
+        // Get the directions based on the request
+        Task {
+            let directions = MKDirections(request: request)
+            let response = try? await directions.calculate()
+            route = response?.routes.first
+        }
+    }
+    
 }
+
 #Preview {
-    RoutePage()
+    RoutePage(destination: MKMapItem())
 }
