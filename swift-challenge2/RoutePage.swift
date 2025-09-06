@@ -13,13 +13,10 @@ struct RoutePage: View {
     @State private var endCoordinate: CLLocationCoordinate2D
     @State private var isLoading = false
     @State private var detourPoints: [CLLocationCoordinate2D] = []
+    @State private var locationUpdateCounter = 0 // Track location updates
     
     // Use your existing LocationManager from the environment
     @EnvironmentObject var locationManager: LocationManager
-    
-    var clLocation: CLLocation {
-        return CLLocation(latitude: locationManager.location.latitude, longitude: locationManager.location.longitude)
-    }
     
     init(destination: MKMapItem, travelTime: Double, transportMode: String) {
         self.destination = destination
@@ -94,13 +91,18 @@ struct RoutePage: View {
             }
         }
         .onAppear {
-            // use the location from your existing LocationManager
+            // Use the location from your existing LocationManager
             startCoordinate = locationManager.location
             calculateExtendedRoute()
+            
+            // Set up a timer to check for location updates periodically
+            Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { _ in
+                locationUpdateCounter += 1
+                startCoordinate = locationManager.location
+            }
         }
-        .onChange(of: clLocation) {
-            // update start coordinate if location changes
-            startCoordinate = clLocation.coordinate
+        .onChange(of: locationUpdateCounter) { oldValue, newValue in
+            // This will trigger when the location updates
             if routes.isEmpty {
                 calculateExtendedRoute()
             }
