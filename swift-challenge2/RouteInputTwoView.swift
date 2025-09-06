@@ -1,10 +1,3 @@
-//
-//  RouteInputTwoView.swift
-//  swift-challenge2
-//
-//  Created by T Krobot on 16/8/25.
-//
-
 import MapKit
 import SwiftUI
 
@@ -91,7 +84,11 @@ struct RouteInputTwoView: View {
                 }
                 
                 .sheet(isPresented: $isShowingSheet){
-                    RoutePage(destination: destination)
+                    RoutePage(
+                        destination: destination,
+                        travelTime: calculateTimeDifferenceInMinutes(),
+                        transportMode: selectedModeOfTransport
+                    )
                 }
                 
                 
@@ -100,10 +97,32 @@ struct RouteInputTwoView: View {
             }
         }
     }
+    
+    //calculates the time difference and converts the hour and minutes to just minutes only.
+    private func calculateTimeDifferenceInMinutes() -> Double {
+        let now = Date()
+        let selectedTime = createTimeFromComponents(hour: selectedHour, minute: selectedMinute)
+        
+        
+        let arrivalTime = selectedTime < now ? Calendar.current.date(byAdding: .day, value: 1, to: selectedTime)! : selectedTime
+        
+        let timeDifference = arrivalTime.timeIntervalSince(now)
+        return timeDifference / 60
+    }
+    
+    private func createTimeFromComponents(hour: Int, minute: Int) -> Date {
+        let calendar = Calendar.current
+        let now = Date()
+        var components = calendar.dateComponents([.year, .month, .day], from: now)
+        components.hour = hour
+        components.minute = minute
+        components.second = 0
+        
+        return calendar.date(from: components) ?? now
+    }
 }
 
 
 #Preview {
     RouteInputTwoView(destination: MKMapItem())
 }
-
