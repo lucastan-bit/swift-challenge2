@@ -13,9 +13,9 @@ struct RoutePage: View {
     @State private var endCoordinate: CLLocationCoordinate2D
     @State private var isLoading = false
     @State private var detourPoints: [CLLocationCoordinate2D] = []
-    @State private var locationUpdateCounter = 0 // Track location updates
+    @State private var locationUpdateCounter = 0 // track em location updates
     
-    // Use your existing LocationManager from the environment
+    // LETS USE UR LOCATION MANAGER
     @EnvironmentObject var locationManager: LocationManager
     
     init(destination: MKMapItem, travelTime: Double, transportMode: String) {
